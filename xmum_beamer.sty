@@ -27,6 +27,8 @@
 \xmum@titlepagefalse
 \newif\ifxmum@tocpage
 \xmum@tocpagefalse
+\newif\ifxmum@framebackground
+\xmum@framebackgroundtrue
 
 \newcommand{\XMUMSetLogoPath}[1]{\gdef\xmum@logopath{#1}}
 \newcommand{\XMUMSetLogoBlue}[1]{\gdef\xmum@logoblue{#1}}
@@ -69,6 +71,17 @@
     \gdef\xmum@navigationmode{none}
     \setbeamertemplate{navigation symbols}{}
 }
+\define@key{beamerframe}{bg}[true]{\xmum@framebackgroundtrue}
+\define@key{beamerframe}{nobg}[true]{\xmum@framebackgroundfalse}
+
+\newcommand{\xmum@insertbackground}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+            {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+    \end{tikzpicture}
+}
+
+\BeforeBeginEnvironment{frame}{\xmum@framebackgroundtrue}
 
 \mode<presentation>
 
@@ -82,21 +95,19 @@
 
 \setbeamercolor{structure}{fg=xmumblue}
 \setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{title}{fg=xmumblue,bg=white}
+\setbeamercolor{title}{fg=xmumblue,bg=xmumblue}
+\setbeamercolor{subtitle}{fg=xmumblue}
 \setbeamercolor{frametitle}{fg=white,bg=xmumblue}
-\setbeamercolor{titlelike}{fg=white,bg=xmumblue}
+\setbeamercolor{titlelike}{parent=palette primary}
 
-\setbeamercolor{section in head/foot}{fg=white,bg=xmumblue}
-\setbeamercolor{subsection in head/foot}{fg=white,bg=xmumblue}
 \setbeamercolor{author in head/foot}{fg=white,bg=xmumblue}
 \setbeamercolor{title in head/foot}{fg=white,bg=xmumblue}
 \setbeamercolor{date in head/foot}{fg=white,bg=xmumblue}
 
-\setbeamercolor{palette primary}{fg=white,bg=xmumblue}
-\setbeamercolor{palette secondary}{fg=white,bg=xmumblue!90!black}
-\setbeamercolor{palette tertiary}{fg=white,bg=xmumblue!75!black}
-\setbeamercolor{palette quaternary}{fg=white,bg=xmumblue!60!black}
-\setbeamercolor{section in head/foot}{fg=white,bg=xmumblue!92!black}
+\setbeamercolor{palette primary}{use=structure,fg=white,bg=structure.fg}
+\setbeamercolor{palette secondary}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor{palette tertiary}{use=structure,fg=white,bg=structure.fg!50!black}
+\setbeamercolor{palette quaternary}{fg=white,bg=structure.fg!50!black}
 
 \setbeamercolor{block title}{fg=white,bg=xmumblue}
 \setbeamercolor{block body}{fg=black,bg=xmumlightblue}
@@ -107,14 +118,16 @@
 \setbeamercolor{xmum title box}{fg=xmumblue,bg=xmumblue!18}
 \setbeamercolor{navigation symbols}{fg=xmumblue}
 \setbeamercolor{navigation symbols dimmed}{fg=xmumblue!60!white}
-\setbeamercolor{upper separation line head}{bg=xmumblue!60!white}
-\setbeamercolor{lower separation line head}{bg=xmumblue!80!white}
+\setbeamercolor{fine separation line}{}
+\setbeamercolor{separation line}{}
 
 \setbeamerfont{title}{size=\LARGE,series=\bfseries}
 \setbeamerfont{subtitle}{size=\large}
 \setbeamerfont{author}{size=\normalsize}
 \setbeamerfont{institute}{size=\normalsize}
 \setbeamerfont{date}{size=\small}
+
+% \setbeamertemplate{frametitle}[default][left]
 
 \newif\ifxmum@firstlogo
 \newcommand{\xmum@renderframelogos}{
@@ -137,11 +150,12 @@
             \hspace{0.5em}
         \fi
         \includegraphics[height=1.20cm]{\xmum@logopath/\xmum@temp}
-            \par\vspace{0.85em}
+            \par\vspace{0.9em}
     }
 }
 
 \setbeamertemplate{frametitle}{
+    \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=1.0ex,leftskip=0.75em,rightskip=0.7em]{frametitle}
         \usebeamerfont{frametitle}\insertframetitle
         \hfill
@@ -162,7 +176,6 @@
 \setbeamertemplate{title page}{
     \begin{minipage}[c][0.85\paperheight][c]{\textwidth}
         \centering
-        \vspace*{-0.2em}
         \ifdefstring{\xmum@titlelogomode}{none}{}{
             \makebox[\textwidth][c]{
                 \ifdefstring{\xmum@titlelogomode}{default}{
@@ -176,92 +189,74 @@
                 }{}
             }\par
         }
-        \vspace{0.85em}
+        \vspace{0.9em}
         \makebox[\textwidth][c]{
             \begin{beamercolorbox}[wd=0.8\textwidth,sep=0.55em,center,rounded=true]{xmum title box}
                 {\usebeamerfont{title}\usebeamercolor[fg]{xmum title box}\inserttitle\par}
             \end{beamercolorbox}
         }\par
         \ifstrempty{\insertsubtitle}{}{
-            \vspace{0.2em}
-            {\usebeamerfont{subtitle}\usebeamercolor[fg]{title}\insertsubtitle\par}
+            \vspace{0.3em}
+            {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
         }
-        \vspace{1.05em}
+        \vspace{1.5em}
         {\usebeamerfont{author}\insertauthor\par}
-        \vspace{0.35em}
+        \vspace{0.4em}
         {\usebeamerfont{institute}\insertinstitute\par}
-        \vspace{0.35em}
+        \vspace{0.4em}
         {\usebeamerfont{date}\insertdate\par}
     \end{minipage}
-}
-
-\setbeamertemplate{headline}{
-    \leavevmode
-    \vskip-5.0ex
-    \hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=9.0ex,dp=4.0ex,leftskip=0.5em,rightskip=0.5em]{section in head/foot}
-        \insertnavigation{\dimexpr\paperwidth-1em\relax}
-    \end{beamercolorbox}}
 }
 
 \setbeamertemplate{footline}{
     \leavevmode
     \hbox{%
-        \begin{beamercolorbox}[wd=0.25\paperwidth,ht=3.0ex,dp=1.8ex,left,leftskip=6ex]{author in head/foot}%
+        \begin{beamercolorbox}[wd=0.15\paperwidth,ht=3.0ex,dp=1.5ex,left,leftskip=6ex]{author in head/foot}%
             \usebeamerfont{author in head/foot}\insertshortauthor
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=0.15\paperwidth,ht=3.0ex,dp=1.8ex,center]{date in head/foot}%
+        \begin{beamercolorbox}[wd=0.15\paperwidth,ht=3.0ex,dp=1.5ex,center]{institute in head/foot}%
+            \usebeamerfont{institute in head/foot}\insertshortinstitute
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.15\paperwidth,ht=3.0ex,dp=1.5ex,center]{date in head/foot}%
             \usebeamerfont{date in head/foot}\insertshortdate
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=0.50\paperwidth,ht=3.0ex,dp=1.8ex,center]{title in head/foot}%
+        \begin{beamercolorbox}[wd=0.45\paperwidth,ht=3.0ex,dp=1.5ex,center]{title in head/foot}%
             \usebeamerfont{title in head/foot}\insertshorttitle
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=0.10\paperwidth,ht=3.0ex,dp=1.8ex,right,rightskip=6ex]{author in head/foot}%
+        \begin{beamercolorbox}[wd=0.10\paperwidth,ht=3.0ex,dp=1.5ex,right,rightskip=6ex]{author in head/foot}%
             \insertframenumber{} / \inserttotalframenumber
         \end{beamercolorbox}%
     }
 }
 
 \setbeamertemplate{background}{
-    \ifdefstring{\xmum@backgroundmode}{both}{
-        \begin{tikzpicture}[remember picture,overlay]
-            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
-                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
-        \end{tikzpicture}
-    }{
-        \ifdefstring{\xmum@backgroundmode}{titleonly}{
-            \ifxmum@titlepage
-                \begin{tikzpicture}[remember picture,overlay]
-                    \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
-                        {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
-                \end{tikzpicture}
-            \fi
+    \ifxmum@framebackground
+        \ifdefstring{\xmum@backgroundmode}{both}{
+            \xmum@insertbackground
         }{
-            \ifdefstring{\xmum@backgroundmode}{titleandtoc}{
+            \ifdefstring{\xmum@backgroundmode}{titleonly}{
                 \ifxmum@titlepage
-                    \begin{tikzpicture}[remember picture,overlay]
-                        \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
-                            {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
-                    \end{tikzpicture}
-                \else
-                    \ifxmum@tocpage
-                        \begin{tikzpicture}[remember picture,overlay]
-                            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
-                                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
-                        \end{tikzpicture}
-                    \fi
+                    \xmum@insertbackground
                 \fi
             }{
-                \ifdefstring{\xmum@backgroundmode}{frameonly}{
-                    \ifxmum@titlepage\else
-                        \begin{tikzpicture}[remember picture,overlay]
-                            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
-                                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
-                        \end{tikzpicture}
+                \ifdefstring{\xmum@backgroundmode}{titleandtoc}{
+                    \ifxmum@titlepage
+                        \xmum@insertbackground
+                    \else
+                        \ifxmum@tocpage
+                            \xmum@insertbackground
+                        \fi
                     \fi
-                }{}
+                }{
+                    \ifdefstring{\xmum@backgroundmode}{frameonly}{
+                        \ifxmum@titlepage\else
+                            \xmum@insertbackground
+                        \fi
+                    }{}
+                }
             }
         }
-    }
+    \fi
 }
 
 \AtBeginDocument{
