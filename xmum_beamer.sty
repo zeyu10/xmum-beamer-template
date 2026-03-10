@@ -1,0 +1,305 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{xmum_beamer}[2026/03/10 XMUM beamer style]
+
+\RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+
+\definecolor{xmumblue}{HTML}{182E60}
+\definecolor{xmumlightblue}{HTML}{E9EFFB}
+
+\newcommand{\xmum@logopath}{logo}
+\newcommand{\xmum@logoblue}{xmum_logo_new_blue.png}
+\newcommand{\xmum@logowhite}{xmum_logo_new_white.png}
+\newcommand{\xmum@logobluepure}{xiamen_university_logo_blue.png}
+\newcommand{\xmum@logowhitepure}{xiamen_university_logo_white.png}
+\newcommand{\xmum@backgroundimage}{xmum_building_blue.png}
+\newcommand{\xmum@backgroundopacity}{0.10}
+\newcommand{\xmum@framelogomode}{default}
+\newcommand{\xmum@framelogos}{}
+\newcommand{\xmum@titlelogomode}{default}
+\newcommand{\xmum@titlelogos}{}
+\newcommand{\xmum@language}{chinese}
+\newcommand{\xmum@backgroundmode}{both}
+\newcommand{\xmum@navigationmode}{none}
+\newif\ifxmum@titlepage
+\xmum@titlepagefalse
+\newif\ifxmum@tocpage
+\xmum@tocpagefalse
+
+\newcommand{\XMUMSetLogoPath}[1]{\gdef\xmum@logopath{#1}}
+\newcommand{\XMUMSetLogoBlue}[1]{\gdef\xmum@logoblue{#1}}
+\newcommand{\XMUMSetLogoWhite}[1]{\gdef\xmum@logowhite{#1}}
+\newcommand{\XMUMSetBackgroundImage}[1]{\gdef\xmum@backgroundimage{#1}}
+\newcommand{\XMUMSetBackgroundOpacity}[1]{\gdef\xmum@backgroundopacity{#1}}
+\newcommand{\XMUMSetFrameLogoDefault}{\gdef\xmum@framelogomode{default}}
+\newcommand{\XMUMSetFrameLogoNone}{\gdef\xmum@framelogomode{none}}
+\newcommand{\XMUMSetFrameLogoPure}{\gdef\xmum@framelogomode{pure}}
+\newcommand{\XMUMSetFrameLogo}[1]{
+    \gdef\xmum@framelogomode{custom}
+    \gdef\xmum@framelogos{#1}
+}
+\newcommand{\XMUMSetTitleLogoDefault}{\gdef\xmum@titlelogomode{default}}
+\newcommand{\XMUMSetTitleLogoNone}{\gdef\xmum@titlelogomode{none}}
+\newcommand{\XMUMSetTitleLogoPure}{\gdef\xmum@titlelogomode{pure}}
+\newcommand{\XMUMSetTitleLogo}[1]{
+    \gdef\xmum@titlelogomode{custom}
+    \gdef\xmum@titlelogos{#1}
+}
+\newcommand{\XMUMSetLanguageChinese}{\gdef\xmum@language{chinese}}
+\newcommand{\XMUMSetLanguageEnglish}{\gdef\xmum@language{english}}
+\newcommand{\XMUMSetBackgroundBoth}{\gdef\xmum@backgroundmode{both}}
+\newcommand{\XMUMSetBackgroundTitleOnly}{\gdef\xmum@backgroundmode{titleonly}}
+\newcommand{\XMUMSetBackgroundFrameOnly}{\gdef\xmum@backgroundmode{frameonly}}
+\newcommand{\XMUMSetBackgroundTitleAndToc}{\gdef\xmum@backgroundmode{titleandtoc}}
+\newcommand{\XMUMSetBackgroundNone}{\gdef\xmum@backgroundmode{none}}
+\newcommand{\XMUMSetNavigationOn}{
+    \gdef\xmum@navigationmode{on}
+    \setbeamertemplate{navigation symbols}{
+        \insertslidenavigationsymbol
+        \insertframenavigationsymbol
+        \insertsectionnavigationsymbol
+        \insertsubsectionnavigationsymbol
+        \insertdocnavigationsymbol
+        \insertbackfindforwardnavigationsymbol
+    }
+}
+\newcommand{\XMUMSetNavigationOff}{
+    \gdef\xmum@navigationmode{none}
+    \setbeamertemplate{navigation symbols}{}
+}
+
+\mode<presentation>
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{bibliography item}[text]
+
+\usefonttheme{professionalfonts}
+\useoutertheme[subsection=false]{smoothbars}
+\useinnertheme{circles}
+
+\setbeamercolor{structure}{fg=xmumblue}
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{title}{fg=xmumblue,bg=white}
+\setbeamercolor{frametitle}{fg=white,bg=xmumblue}
+\setbeamercolor{titlelike}{fg=white,bg=xmumblue}
+
+\setbeamercolor{section in head/foot}{fg=white,bg=xmumblue}
+\setbeamercolor{subsection in head/foot}{fg=white,bg=xmumblue}
+\setbeamercolor{author in head/foot}{fg=white,bg=xmumblue}
+\setbeamercolor{title in head/foot}{fg=white,bg=xmumblue}
+\setbeamercolor{date in head/foot}{fg=white,bg=xmumblue}
+
+\setbeamercolor{palette primary}{fg=white,bg=xmumblue}
+\setbeamercolor{palette secondary}{fg=white,bg=xmumblue!90!black}
+\setbeamercolor{palette tertiary}{fg=white,bg=xmumblue!75!black}
+\setbeamercolor{palette quaternary}{fg=white,bg=xmumblue!60!black}
+\setbeamercolor{section in head/foot}{fg=white,bg=xmumblue!92!black}
+
+\setbeamercolor{block title}{fg=white,bg=xmumblue}
+\setbeamercolor{block body}{fg=black,bg=xmumlightblue}
+\setbeamercolor{block title example}{fg=xmumblue,bg=xmumlightblue!90!black}
+\setbeamercolor{block body example}{fg=black,bg=xmumlightblue!70!white}
+\setbeamercolor{block title alerted}{fg=white,bg=xmumblue!80!black}
+\setbeamercolor{block body alerted}{fg=black,bg=xmumlightblue!50!white}
+\setbeamercolor{xmum title box}{fg=xmumblue,bg=xmumblue!18}
+\setbeamercolor{navigation symbols}{fg=xmumblue}
+\setbeamercolor{navigation symbols dimmed}{fg=xmumblue!60!white}
+\setbeamercolor{upper separation line head}{bg=xmumblue!60!white}
+\setbeamercolor{lower separation line head}{bg=xmumblue!80!white}
+
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamerfont{date}{size=\small}
+
+\newif\ifxmum@firstlogo
+\newcommand{\xmum@renderframelogos}{
+    \xmum@firstlogotrue
+    \@for\xmum@temp:=\xmum@framelogos\do{
+        \ifxmum@firstlogo
+            \xmum@firstlogofalse
+        \else
+            \hspace{0.3em}
+        \fi
+        \includegraphics[height=2.35ex]{\xmum@logopath/\xmum@temp}
+    }
+}
+\newcommand{\xmum@rendertitlelogos}{
+    \xmum@firstlogotrue
+    \@for\xmum@temp:=\xmum@titlelogos\do{
+        \ifxmum@firstlogo
+            \xmum@firstlogofalse
+        \else
+            \hspace{0.5em}
+        \fi
+        \includegraphics[height=1.20cm]{\xmum@logopath/\xmum@temp}
+            \par\vspace{0.85em}
+    }
+}
+
+\setbeamertemplate{frametitle}{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=1.0ex,leftskip=0.75em,rightskip=0.7em]{frametitle}
+        \usebeamerfont{frametitle}\insertframetitle
+        \hfill
+        \ifdefstring{\xmum@framelogomode}{default}{
+            \includegraphics[height=2.35ex]{\xmum@logopath/\xmum@logowhite}
+        }{
+            \ifdefstring{\xmum@framelogomode}{pure}{
+                \includegraphics[height=2.35ex]{\xmum@logopath/\xmum@logowhitepure}
+            }{
+                \ifdefstring{\xmum@framelogomode}{custom}{
+                    \xmum@renderframelogos
+                }{}
+            }
+        }
+    \end{beamercolorbox}
+}
+
+\setbeamertemplate{title page}{
+    \begin{minipage}[c][0.85\paperheight][c]{\textwidth}
+        \centering
+        \vspace*{-0.2em}
+        \ifdefstring{\xmum@titlelogomode}{none}{}{
+            \makebox[\textwidth][c]{
+                \ifdefstring{\xmum@titlelogomode}{default}{
+                    \includegraphics[height=1.20cm]{\xmum@logopath/\xmum@logoblue}
+                }{}
+                \ifdefstring{\xmum@titlelogomode}{pure}{
+                    \includegraphics[height=1.20cm]{\xmum@logopath/\xmum@logobluepure}
+                }{}
+                \ifdefstring{\xmum@titlelogomode}{custom}{
+                    \xmum@rendertitlelogos
+                }{}
+            }\par
+        }
+        \vspace{0.85em}
+        \makebox[\textwidth][c]{
+            \begin{beamercolorbox}[wd=0.8\textwidth,sep=0.55em,center,rounded=true]{xmum title box}
+                {\usebeamerfont{title}\usebeamercolor[fg]{xmum title box}\inserttitle\par}
+            \end{beamercolorbox}
+        }\par
+        \ifstrempty{\insertsubtitle}{}{
+            \vspace{0.2em}
+            {\usebeamerfont{subtitle}\usebeamercolor[fg]{title}\insertsubtitle\par}
+        }
+        \vspace{1.05em}
+        {\usebeamerfont{author}\insertauthor\par}
+        \vspace{0.35em}
+        {\usebeamerfont{institute}\insertinstitute\par}
+        \vspace{0.35em}
+        {\usebeamerfont{date}\insertdate\par}
+    \end{minipage}
+}
+
+\setbeamertemplate{headline}{
+    \leavevmode
+    \vskip-5.0ex
+    \hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=9.0ex,dp=4.0ex,leftskip=0.5em,rightskip=0.5em]{section in head/foot}
+        \insertnavigation{\dimexpr\paperwidth-1em\relax}
+    \end{beamercolorbox}}
+}
+
+\setbeamertemplate{footline}{
+    \leavevmode
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.25\paperwidth,ht=3.0ex,dp=1.8ex,left,leftskip=6ex]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.15\paperwidth,ht=3.0ex,dp=1.8ex,center]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertshortdate
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.50\paperwidth,ht=3.0ex,dp=1.8ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.10\paperwidth,ht=3.0ex,dp=1.8ex,right,rightskip=6ex]{author in head/foot}%
+            \insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}%
+    }
+}
+
+\setbeamertemplate{background}{
+    \ifdefstring{\xmum@backgroundmode}{both}{
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+        \end{tikzpicture}
+    }{
+        \ifdefstring{\xmum@backgroundmode}{titleonly}{
+            \ifxmum@titlepage
+                \begin{tikzpicture}[remember picture,overlay]
+                    \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+                        {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+                \end{tikzpicture}
+            \fi
+        }{
+            \ifdefstring{\xmum@backgroundmode}{titleandtoc}{
+                \ifxmum@titlepage
+                    \begin{tikzpicture}[remember picture,overlay]
+                        \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+                            {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+                    \end{tikzpicture}
+                \else
+                    \ifxmum@tocpage
+                        \begin{tikzpicture}[remember picture,overlay]
+                            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+                                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+                        \end{tikzpicture}
+                    \fi
+                \fi
+            }{
+                \ifdefstring{\xmum@backgroundmode}{frameonly}{
+                    \ifxmum@titlepage\else
+                        \begin{tikzpicture}[remember picture,overlay]
+                            \node[anchor=south,inner sep=0,opacity=\xmum@backgroundopacity] at ([yshift=0.2cm]current page.south)
+                                {\includegraphics[width=0.9\paperwidth]{\xmum@logopath/\xmum@backgroundimage}};
+                        \end{tikzpicture}
+                    \fi
+                }{}
+            }
+        }
+    }
+}
+
+\AtBeginDocument{
+    \ifdefstring{\xmum@language}{english}{
+        \renewcommand{\contentsname}{Contents}
+        \renewcommand{\figurename}{Figure}
+        \renewcommand{\tablename}{Table}
+        \renewcommand{\lstlistingname}{Listing}
+        \renewcommand{\refname}{References}
+        \renewcommand{\bibname}{Bibliography}
+        \renewcommand{\today}{\ifcase\month\or
+            January\or February\or March\or April\or May\or June\or
+            July\or August\or September\or October\or November\or December\fi
+            \space\number\day, \number\year}
+    }{
+        \renewcommand{\contentsname}{目录}
+        \renewcommand{\figurename}{图}
+        \renewcommand{\tablename}{表}
+        \renewcommand{\lstlistingname}{代码}
+        \renewcommand{\refname}{参考文献}
+        \renewcommand{\bibname}{参考文献}
+    }
+}
+
+\AtBeginSection[]{
+    {\xmum@tocpagetrue
+    \begin{frame}{\contentsname}
+        \tableofcontents[currentsection,sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+    \end{frame}
+    }
+}
+
+\newcommand{\XMUMTitleFrame}{
+    {\xmum@titlepagetrue
+    \begin{frame}
+        \titlepage
+    \end{frame}
+    }
+}
+
+\mode<all>
