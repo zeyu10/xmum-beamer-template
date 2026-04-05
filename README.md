@@ -1,6 +1,6 @@
 # 厦门大学马来西亚分校深蓝主题风格 Beamer 模板 / Deep Blue Theme Beamer Template for Xiamen University Malaysia
 
-![img-0](img/img-0.png)
+![img-1](img/img-1.png)
 
 这是一个面向厦门大学马来西亚分校场景的 Beamer 模板，主色为深蓝色，适合课程汇报、学术报告、项目答辩、相关会议等演示文稿。
 
@@ -151,19 +151,19 @@ xelatex your_file.tex
 
 可取消对应位置的注释来调用该接口：
 
-![img-1](img/img-1.png)
+![img-0](img/img-0.png)
 
 ### 接口示例
 
 | 默认长版校徽 | 使用圆形校徽 |
 | :---: | :---: |
 | 开启背景关闭导航按键 | 关闭背景开启导航按键 |
-| ![ex-2](img/img-2.png) | ![ex-3](img/img-3.png) |
+| ![ex-1](img/img-1.png) | ![ex-2](img/img-2.png) |
 
 | 不显示任何 Logo | 使用自定义 Logo |
 | :---: | :---: |
 | 关闭背景关闭导航按键 | 开启背景关闭导航按键 |
-| ![ex-4](img/img-4.png) | ![ex-5](img/img-5.png) |
+| ![ex-3](img/img-3.png) | ![ex-4](img/img-4.png) |
 
 ## 常规使用建议
 
@@ -206,7 +206,13 @@ int main() {
 ## 已知问题
 
 - 在部分 PDF 阅读器（MS Edge）中，全屏模式下最后一页的导航栏可能无法完整显示。
-- 如遇显示异常，建议改用其他 PDF 阅读器，推荐使用 [Adobe Acrobat Reader](https://get.adobe.com/reader) 阅读器，或使用 [WPS PDF 独立版](https://www.wps.cn/product/kingsoftpdf)。
+- 如遇显示异常，建议改用其他 PDF 阅读器，推荐使用 [Adobe Acrobat Reader](https://get.adobe.com/reader) 阅读器、[Sumatra PDF](https://www.sumatrapdfreader.org)，或使用 [WPS PDF 独立版](https://www.wps.cn/product/kingsoftpdf)。
+- 由于 Overleaf 不再接受非官方模板的上传，如果需要在 Overleaf 上使用此模板，最好的方法是在 GitHub 以 `.zip` 的形式下载到本地后再上传到 Overleaf 使用。
+- 在 Overleaf 上使用时，可能会遇到编译错误，这是因为 Overleaf 的默认编译器为 `pdflatex`，而该模板需要使用 `xelatex` 编译。解决方法是在 Overleaf 的项目设置中将编译器更改为 `xelatex`，然后重新编译即可；或在 `.tex` 文件第一行添加以下注释来指定编译器：
+
+    ```tex line-numbers
+    % !TeX program = xelatex
+    ```
 
 ---
 
