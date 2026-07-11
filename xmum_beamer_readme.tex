@@ -157,7 +157,7 @@
             \midrule
             \multicolumn{2}{l}{\textbf{页面生成}} \\
             \texttt{\textbackslash XMUMTitleFrame} & 生成标题页 \\
-            \texttt{\textbackslash XMUMSingleLineFrame\{title\}\{text\}} & 生成单行正文页（帧标题与正文均需显式传入） \\
+            \texttt{\textbackslash XMUMSingleLineFrame[true/false]\{title\}\{text\}} & 生成单行正文页（可选参数用于切换背景样式） \\
             \bottomrule
         \end{tabular}
     \end{table}
@@ -223,7 +223,7 @@
         \item 按内容组织为 \texttt{\textbackslash section} \texttt{\textbackslash subsection}... 以及若干 \texttt{\textbackslash begin\{frame\}\{帧标题\}} 进行内容编排。
         \item 若某一页不需要背景，可写为 \texttt{\textbackslash begin\{frame\}[nobg]\{帧标题\}} 来关闭背景。
         \item 若当前页包含 \texttt{lstlisting} 或 \texttt{verbatim} 等原样代码环境，则需将参数写为：\texttt{\textbackslash begin\{frame\}[fragile]} 或 \texttt{\textbackslash begin\{frame\}[fragile,nobg]\{帧标题\}}
-        \item 可使用 \texttt{\textbackslash XMUMSingleLineFrame\{帧标题\}\{单行文本\}} 来生成单行正文页。
+        \item 可使用 \texttt{\textbackslash XMUMSingleLineFrame[true/false]\{帧标题\}\{单行文本\}} 生成单行正文页，并通过可选参数切换背景样式。
     \end{enumerate}
 
     \begin{block}{建议}
@@ -367,6 +367,27 @@ int main() {
 %     \bibliography{refs}
 % \end{frame}
 
-\XMUMSingleLineFrame{感谢}{感谢阅读和使用此模板}
+\begin{frame}{单行正文页彩色背景说明}
+    \vspace{-2pt}
+    \begin{itemize}
+        \item \texttt{\textbackslash XMUMSingleLineFrame} 包含一个可选参数，用于控制单行正文页的背景样式。
+        \item 若需要保留当前模板背景，可写为：\\ \texttt{\textbackslash XMUMSingleLineFrame[true]\{帧标题\}\{单行文本\}}。
+        \item 若需要使用彩色背景，可写为：\\ \texttt{\textbackslash XMUMSingleLineFrame[false]\{帧标题\}\{单行文本\}}。
+        \item 默认值为 \texttt{false}，可直接写为：\\ \texttt{\textbackslash XMUMSingleLineFrame\{帧标题\}\{单行文本\}}。
+        \item 文本默认字体大小为 \texttt{\textbackslash LARGE}，可在正文中自行调整。
+    \end{itemize}
+    \vspace{-2pt}
+    \begin{block}{示例}
+        \texttt{\textbackslash XMUMSingleLineFrame[true]\{感谢\}\{感谢阅读和使用此模板\}}
+        \texttt{\textbackslash XMUMSingleLineFrame[false]\{祝愿\}\{祝愿马校生活愉快\}}
+        \texttt{\textbackslash XMUMSingleLineFrame\{项目地址\} \\ \{\{\textbackslash Large\textbackslash url\{https://github.com/zeyu10/xmum-beamer-template\}\}\}}
+    \end{block}
+\end{frame}
+
+\XMUMSingleLineFrame[true]{感谢}{感谢阅读和使用此模板}
+
+\XMUMSingleLineFrame[false]{祝愿}{祝愿马校生活愉快}
+
+\XMUMSingleLineFrame{项目地址}{{\Large\url{https://github.com/zeyu10/xmum-beamer-template}}}
 
 \end{document}

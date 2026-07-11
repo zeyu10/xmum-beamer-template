@@ -310,12 +310,18 @@
     }
 }
 
-\newcommand{\XMUMSingleLineFrame}[2]{
-    \begin{frame}{#1}
+\newcommand{\XMUMSingleLineFrame}[3][false]{
+    {\ifstrequal{#1}{true}{
+    }{
+        \renewcommand{\xmum@backgroundimage}{xmum_building.png}
+        \renewcommand{\xmum@backgroundopacity}{1.0}
+    }
+    \begin{frame}{#2}
         \begin{center}
-            {\LARGE #2}
+            {\LARGE #3}
         \end{center}
     \end{frame}
+    }
 }
 
 \mode<all>

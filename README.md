@@ -1,5 +1,14 @@
 # 厦门大学马来西亚分校深蓝主题风格 Beamer 模板 / Deep Blue Theme Beamer Template for Xiamen University Malaysia
 
+![xelatex](https://img.shields.io/badge/engine-XeLaTeX-0A3D91)
+![last commit](https://img.shields.io/github/last-commit/zeyu10/xmum-beamer-template)
+![license](https://img.shields.io/github/license/zeyu10/xmum-beamer-template)
+![stars](https://img.shields.io/github/stars/zeyu10/xmum-beamer-template)
+![watchers](https://img.shields.io/github/watchers/zeyu10/xmum-beamer-template)
+![forks](https://img.shields.io/github/forks/zeyu10/xmum-beamer-template)
+
+[简体中文](README.md) | [English](README_EN.md)
+
 ![img-1](img/img-1.png)
 
 这是一个面向厦门大学马来西亚分校场景的 Beamer 模板，主色为深蓝色，适合课程汇报、学术报告、项目答辩、相关会议等演示文稿。
@@ -145,7 +154,7 @@ xelatex your_file.tex
 | 命令 | 作用 |
 | --- | --- |
 | `\XMUMTitleFrame` | 生成标题页 |
-| `\XMUMSingleLineFrame{title}{text}` | 生成单行正文页（帧标题与正文均需显式传入） |
+| `\XMUMSingleLineFrame[true/false]{title}{text}` | 生成单行正文页（可选参数用于切换背景样式） |
 
 ### 快速使用
 
@@ -175,7 +184,9 @@ xelatex your_file.tex
 4. 按内容组织为 `\section` `\subsection`... 以及若干 `\begin{frame}{帧标题}` 进行内容编排。
 5. 若某一页不需要背景，可写为 `\begin{frame}[nobg]{帧标题}` 来关闭背景。
 6. 若当前页包含 `lstlisting` 或 `verbatim` 等原样代码环境，则需将参数写为：`\begin{frame}[fragile]{帧标题}` 或 `\begin{frame}[fragile,nobg]{帧标题}`
-7. 可使用 `\XMUMSingleLineFrame{帧标题}{单行文本}` 来生成单行正文页。
+7. 可使用 `\XMUMSingleLineFrame[true/false]{帧标题}{单行文本}` 来生成单行正文页，并通过可选参数切换背景样式。
+8. 若需要保留当前模板背景，可使用 `\XMUMSingleLineFrame[true]{帧标题}{单行文本}`；若需要使用彩色背景，可使用 `\XMUMSingleLineFrame[false]{帧标题}{单行文本}`，或直接写为 `\XMUMSingleLineFrame{帧标题}{单行文本}`。
+9. 单行文本默认字体大小为 `\LARGE`，可在正文中自行调整。
 
 建议：可参考 [xmum_beamer_readme.tex](xmum_beamer_readme.tex) 中的示例结构，根据实际需求进行调整。
 
